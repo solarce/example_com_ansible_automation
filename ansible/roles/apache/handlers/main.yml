@@ -1,0 +1,7 @@
+---
+# Apache::Handlers
+# 
+# Handler to handle apache service notifications
+
+- name: restart apache
+  service: name=apache2 state=restarted

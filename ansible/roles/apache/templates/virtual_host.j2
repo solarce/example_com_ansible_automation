@@ -1,0 +1,17 @@
+## MANAGED BY ANSIBLE ##
+##
+#
+
+<VirtualHost *:80>
+    ServerName {{ domain_name}}
+    DocumentRoot {{ docroot }}
+
+    DirectoryIndex index.php
+    
+    <Directory {{ docroot }}>
+        AllowOverride AuthConfig FileInfo Indexes Limit Options=ExecCGI,Includes,Indexes,MultiViews,SymlinksIfOwnerMatch
+    </Directory>
+
+    ErrorLog "|/usr/sbin/rotatelogs /var/log/apache2/{{ domain_name }}/error_log_%Y-%m-%d-%H 3600 -0"
+    CustomLog "|/usr/sbin/rotatelogs /var/log/apache2/{{ domain_name }}/access_%Y-%m-%d-%H 3600 -0" combined
+</VirtualHost>

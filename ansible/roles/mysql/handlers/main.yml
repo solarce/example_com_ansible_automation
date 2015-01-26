@@ -1,0 +1,7 @@
+---
+# MySQL::Handlers
+# 
+# Handler to handle DB tier notifications
+
+- name: restart mysql
+  service: name=mysql state=restarted

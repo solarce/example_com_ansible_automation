@@ -1,0 +1,22 @@
+---
+# Apache::Files
+#
+# These tasks are responsible for
+## - preparing the apache config environment
+
+- name: Apache::Files -- hack to deploy from bitbucket
+  shell: ssh-keyscan bitbucket.org >> /etc/ssh/ssh_known_hosts
+
+- name: Apache::Files -- directory for example.com code
+  file: path={{ docroot }} state=directory
+
+- name: Apache::Files -- directory for example.com apache log files
+  file: path=/var/log/apache2/{{ domain_name }} state=directory
+
+- name: Apache::Files -- remove the apache default virtualhost file
+  file: path=/etc/apache2/sites-enabled/000-default state=absent
+
+- name: Apache::Files -- Create Apache virtual host configuration file
+  template: src=virtual_host.j2 dest=/etc/apache2/sites-enabled/001_example.com.conf
+  notify:
+  - restart apache

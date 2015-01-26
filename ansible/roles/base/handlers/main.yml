@@ -1,0 +1,7 @@
+---
+# Base::Handlers
+# 
+# Handler to handle postfix service notifications
+
+- name: restart postfix
+  service: name=postfix state=restarted

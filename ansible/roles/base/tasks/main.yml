@@ -1,0 +1,26 @@
+---
+# Base::Main
+# 
+# These tasks are common to all servers and include
+## - install base packages
+## - manage /etc/hosts
+#
+
+- name: "Base::Main -- install base packages we want on all systems"
+  apt: name={{ item }}
+    state=latest
+    update_cache=yes
+  with_items:
+  - git
+  - htop
+
+- name: "Base::Main -- deploy custom /etc/hosts file"
+  file: path=/etc/hosts state=file
+
+- name: "Base::Main -- install Postfix for outbound email"
+  shell: "DEBIAN_FRONTEND=noninteractive /usr/bin/apt-get -y install postfix"
+
+- name: "Base::Main -- Deploy configuration file for Postfix"
+  copy: src=postfix_main_cf dest=/etc/postfix/main.cf
+  notify:
+   - restart postfix

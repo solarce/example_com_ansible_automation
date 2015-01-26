@@ -1,0 +1,20 @@
+---
+# Memcache::Main
+# 
+# These tasks handle Apache related tasks, including:
+## - installing the mysql server
+
+- name: Memcache::Main -- Install default package
+  apt: pkg=memcached state=present
+
+- name: Memcache::Main -- Push default configuration template
+  template:
+    src=memcached.conf.j2
+    dest=/etc/memcached.conf
+    owner=root group=root mode=0644
+  notify:
+  - memcached-restart
+
+# Ensure service is running.
+- name: Memcache::Main -- Ensure deamon is running correctly
+  service: name=memcached state=started

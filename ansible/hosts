@@ -1,0 +1,6 @@
+# list of "sites", really a list of the servers
+## currently only the DigitalOcean VPS that runs 
+## example.com
+
+[sites]
+do.example.com

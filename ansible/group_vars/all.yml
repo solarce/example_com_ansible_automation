@@ -1,0 +1,30 @@
+---
+# Variables listed here are applicable to all host groups
+
+## These variables are used in other playbook files to 
+## file in specific config values
+
+# apache specific variables
+httpd_port: 80
+domain_name: example.com 
+docroot: /var/www/{{ domain_name }}
+repository: git@bitbucket.org:example/example.com.git
+
+# mysql specific variables
+mysqlservice: mysqld
+mysql_port: 3306
+wordpress_db_user: example
+wordpress_db_password: example
+wordpress_db_name: example
+
+root_db_user: root
+root_db_password: example
+
+# memcache specific variables
+memcached_memory: "768"
+
+# serverdensity specific variables
+server_density_url: https://example.serverdensity.io
+# obtained from agent install wizard
+## * https://support.serverdensity.com/hc/en-us/articles/201091216-Installing-the-agent
+server_density_agent_key: redacted

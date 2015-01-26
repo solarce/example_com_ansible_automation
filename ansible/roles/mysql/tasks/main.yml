@@ -1,0 +1,34 @@
+---
+# MySQL::Main
+# 
+# These tasks handle Apache related tasks, including:
+## - installing the mysql server
+## - deploying a custom mysql config file
+## - ensuring the mysql service is running
+## - creates database for whitneyhess.com
+## - creates username and password for whitneyhess.com
+## - manages mysql root username and password
+## - manages /etc/hosts entry for wordpress to work
+
+- name: MySQL::Main -- Install Mysql package
+  apt: name={{ item }} state=installed
+  with_items:
+   - mysql-server
+   - python-mysqldb
+
+- name: MySQL::Main -- Create Mysql configuration file
+  template: src=my.cnf.j2 dest=/etc/mysql/my.cnf
+  notify: 
+  - restart mysql
+
+- name: MySQL::Main -- Start Mysql Service
+  service: name=mysql state=started enabled=true
+
+- name: MySQL::Main -- Create Application Database
+  mysql_db: name={{ wordpress_db_name }} state=present
+
+- name: MySQL::Main -- Create Application DB User
+  mysql_user: name={{ wordpress_db_user }} password={{ wordpress_db_password }} priv=*.*:ALL host='localhost' state=present
+
+- name: MySQL::Main -- Create root DB User
+  mysql_user: name={{ root_db_user }} password={{ root_db_password }} priv=*.*:ALL host='%' state=present

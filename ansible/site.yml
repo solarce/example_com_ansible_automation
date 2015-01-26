@@ -1,0 +1,18 @@
+---
+# site.yml 
+## this file determines what ansible will _do_ to hosts you manage with it
+## it's currently written so that it does the same things to all hosts
+## this is simplest as all of whitneyhess.com runs on a single DigitalOcean VPS
+
+# defines things which will apply to all hosts
+- hosts: all
+  user: root
+  gather_facts: True
+
+  # defines the roles which will apply to all hosts
+  roles:
+    - base
+    - apache
+    - mysql
+    - memcached
+    - serverdensity-agent
